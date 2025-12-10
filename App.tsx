@@ -273,6 +273,20 @@ function App() {
       navigator.clipboard.writeText(text).then(() => showToast("Copied to clipboard!"));
   };
 
+  // Helper for dynamic button text
+  const getInteractiveButtonText = () => {
+      switch (state.interactiveMode) {
+          case 'race':
+          case 'marble':
+              return 'START RACE';
+          case 'card':
+              return 'DRAW A CARD';
+          case 'wheel':
+          default:
+              return showResultCard ? 'SPIN AGAIN' : 'START SPIN';
+      }
+  };
+
   // --- Render Components ---
 
   const renderList = (type: 'names' | 'tasks') => {
@@ -441,7 +455,7 @@ function App() {
                             disabled={state.names.length === 0 || isSpinning}
                             className={`w-full text-white text-2xl font-extrabold py-5 rounded-xl shadow-lg transition transform active:scale-[0.98] ${state.names.length === 0 || isSpinning ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600 hover:scale-[1.02]'}`}
                         >
-                            {state.mode === 'groups' ? `CREATE ${state.numGroups} GROUPS` : state.mode === 'interactive' ? 'START INTERACTIVE DRAW' : 'DRAW LOTS'}
+                            {state.mode === 'groups' ? `CREATE ${state.numGroups} GROUPS` : state.mode === 'interactive' ? getInteractiveButtonText() : 'DRAW LOTS'}
                         </button>
                         <button onClick={() => {
                             updateState({ history: [], availableNamesIndices: state.names.map((_, i) => i), availableTasksIndices: state.tasks.map((_, i) => i) });
@@ -536,7 +550,7 @@ function App() {
                                                 onClick={handleDraw} 
                                                 className="bg-green-500 hover:bg-green-600 text-white font-black text-2xl py-4 px-12 rounded-full shadow-2xl hover:scale-105 active:scale-95 transition-all animate-bounce"
                                             >
-                                                {showResultCard ? 'SPIN AGAIN' : 'START SPIN'}
+                                                {getInteractiveButtonText()}
                                             </button>
                                         </div>
                                     )}
