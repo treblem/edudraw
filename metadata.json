@@ -1,0 +1,5 @@
+{
+  "name": "EduDraw",
+  "description": "A feature-rich random selector app for educators with modes for single, paired, groups, and interactive visualizations like Wheel, Duck Race, Marble Race, and Card Draw.",
+  "requestFramePermissions": []
+}
